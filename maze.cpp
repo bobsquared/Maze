@@ -20,7 +20,6 @@ Maze::Maze(){
 	const int s = size;
 
 	vertices = new Vertex*[s];
-	check = new VOList<Vertex>();
 	for (int i = 0; i < s; i++){
 		vertices[i] = new Vertex[s];
 	}
@@ -53,7 +52,6 @@ Maze::Maze(int x){
 	const int s = size;
 
 	vertices = new Vertex*[s];
-	check = new VOList<Vertex>();
 	for (int i = 0; i < s; i++){
 		vertices[i] = new Vertex[s];
 	}
@@ -83,7 +81,7 @@ Maze::Maze(int x, string w){
 	const int s = size;
 
 	vertices = new Vertex*[s];
-	check = new VOList<Vertex>();
+	
 	for (int i = 0; i < s; i++){
 		vertices[i] = new Vertex[s];
 	}
@@ -134,10 +132,12 @@ void Maze::initMaze(){
 
 
 	//Set vertex (0,0) as visited, and insert into list.
+	check = new VOList<Vertex>();
+
 	vertices[0][0].setPath();
 	check->insert(vertices[0][0]);
 
-	Vertex* temp =  new Vertex();
+	Vertex* temp = new Vertex();
 
 	while (size*size > check->getElementCount()){
 
@@ -222,7 +222,7 @@ void Maze::initMaze(){
 		
 	}
 
-	delete temp;
+	//delete temp;
 	delete check;
 
 }
@@ -232,6 +232,7 @@ void Maze::initMaze(){
 //Probably did some shit coding here tbh but it works.
 void Maze::printMaze(){
 
+	int j = 0;
 	//Print top border
 	for (int i = 0; i < (size*5 - 3); i++){
 		cout << walls;
@@ -286,7 +287,7 @@ void Maze::printMaze(){
 		cout << walls << endl;
 
 	}
-	
+
 	for (int i = 0; i < (size*5 - 2); i++){
 		cout << walls;
 	}
