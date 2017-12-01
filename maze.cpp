@@ -13,15 +13,17 @@ Maze::Maze(){
 	walls = "\u2588";	
 
 	//Change the size of the maze.
-	size = 25;
+	width = 25;
+	length = 25;
 
 
 	//Create 2D array of vertices
-	const int s = size;
+	const int w = width;
+	const int l = length;
 
-	vertices = new Vertex*[s];
-	for (int i = 0; i < s; i++){
-		vertices[i] = new Vertex[s];
+	vertices = new Vertex*[width];
+	for (int i = 0; i < width; i++){
+		vertices[i] = new Vertex[length];
 	}
 
 	//Initalize maze
@@ -42,18 +44,20 @@ Maze::Maze(int x){
 	if (x < 1){
 		x = 1;
 	}
-	else if (x > 31){
-		x = 31;
+	else if (x > 100){
+		x = 100;
 	}
 
-	size = x;
+	width = x;
+	length = x;
 
 	//Create 2D array of vertices
-	const int s = size;
+	const int w = width;
+	const int l = length;
 
-	vertices = new Vertex*[s];
-	for (int i = 0; i < s; i++){
-		vertices[i] = new Vertex[s];
+	vertices = new Vertex*[width];
+	for (int i = 0; i < width; i++){
+		vertices[i] = new Vertex[length];
 	}
 
 	//Initalize maze
@@ -64,26 +68,102 @@ Maze::Maze(int x){
 
 }
 
-Maze::Maze(int x, string w){
+Maze::Maze(int x, string wa){
 
-	walls = w;	
+	walls = wa;	
 
 	//size conditions of the maze
 	if (x < 1){
 		x = 1;
 	}
-	else if (x > 31){
-		x = 31;
+	else if (x > 100){
+		x = 100;
 	}
-	size = x;
-
+	width = x;
+	length = x;
 	//Create 2D array of vertices
-	const int s = size;
+	const int w = width;
+	const int l = length;
 
-	vertices = new Vertex*[s];
-	
-	for (int i = 0; i < s; i++){
-		vertices[i] = new Vertex[s];
+	vertices = new Vertex*[width];
+	for (int i = 0; i < width; i++){
+		vertices[i] = new Vertex[length];
+	}
+
+	//Initalize maze
+	initMaze();
+
+
+
+
+}
+
+Maze::Maze(int x, int y){
+
+	walls = "\u2588";	
+
+	//size conditions of the maze
+	if (x < 1){
+		x = 1;
+	}
+	else if (x > 100){
+		x = 100;
+	}
+
+	if (y < 1){
+		y = 1;
+	}
+	else if (y > 100){
+		y = 100;
+	}
+
+	width = x;
+	length = y;
+	//Create 2D array of vertices
+	const int w = width;
+	const int l = length;
+
+	vertices = new Vertex*[width];
+	for (int i = 0; i < width; i++){
+		vertices[i] = new Vertex[length];
+	}
+
+	//Initalize maze
+	initMaze();
+
+
+
+
+}
+
+Maze::Maze(int x, int y, string wa){
+
+	walls = wa;	
+
+	//size conditions of the maze
+	if (x < 1){
+		x = 1;
+	}
+	else if (x > 100){
+		x = 100;
+	}
+
+	if (y < 1){
+		y = 1;
+	}
+	else if (y > 100){
+		y = 100;
+	}
+
+	width = x;
+	length = y;
+	//Create 2D array of vertices
+	const int w = width;
+	const int l = length;
+
+	vertices = new Vertex*[width];
+	for (int i = 0; i < width; i++){
+		vertices[i] = new Vertex[length];
 	}
 
 	//Initalize maze
@@ -96,7 +176,7 @@ Maze::Maze(int x, string w){
 
 Maze::~Maze(){
 
-	for (int i = 0; i < size; i++){
+	for (int i = 0; i < width; i++){
 		delete [] vertices[i];
 		vertices[i] = NULL;
 	}
@@ -117,9 +197,9 @@ void Maze::initMaze(){
 	int k = 0;
 
 	//Set the all the vertices' location into the vertex
-	for (i = 0; i < size; i++){
+	for (i = 0; i < width; i++){
 
-		for (k = 0; k < size; k++){
+		for (k = 0; k < length; k++){
 			Vertex v = Vertex();
 			v.setI(i);
 			v.setK(k);
@@ -139,7 +219,7 @@ void Maze::initMaze(){
 
 	Vertex* temp = new Vertex();
 
-	while (size*size > check->getElementCount()){
+	while (width*length > check->getElementCount()){
 
 		//randomly pick a vertex in the list, and get its location.
 		int set = r.randint(0,check->getElementCount()-1);
@@ -165,12 +245,12 @@ void Maze::initMaze(){
 		}
 
 		//if at the border right of the maze
-		if (k >= size-1){
+		if (k >= length-1){
 			right = false;
 		}
 
 		//if at the bottom of the maze
-		if (i >= size-1){
+		if (i >= width-1){
 			down = false;
 		}
 
@@ -220,10 +300,12 @@ void Maze::initMaze(){
 		}
 
 		
+		
 	}
 
 	//delete temp;
 	delete check;
+
 
 }
 
@@ -234,23 +316,23 @@ void Maze::printMaze(){
 
 	int j = 0;
 	//Print top border
-	for (int i = 0; i < (size*5 - 3); i++){
+	for (int i = 0; i < (length*3 - 1); i++){
 		cout << walls;
 	}
 
 	//And then I did something and i forgot what i did cause i didn't put comments while writing it.
-	for (int i = 0; i < size; i++){
+	for (int i = 0; i < width; i++){
 
 		if (i != 0){
 			cout << walls;
 		}
 
-		for (int j = 0; j < size; j++){
+		for (int j = 0; j < length; j++){
 
 			if (i !=0 && vertices[i][j].getUp()){
 				
-				if (j != size-1){
-					cout << " " << walls << walls << walls << walls;
+				if (j != length-1){
+					cout << " " << walls << walls;
 				}
 				else{
 					cout << " ";
@@ -260,8 +342,8 @@ void Maze::printMaze(){
 			}		
 			else if (i != 0){
 				
-				if (j != size-1){
-					cout << walls << walls << walls << walls << walls;
+				if (j != length-1){
+					cout << walls << walls << walls;
 				}
 				else{
 					cout << walls;
@@ -273,14 +355,14 @@ void Maze::printMaze(){
 
 		cout << walls << endl << walls;
 
-		for (int k = 0; k < size; k++){
+		for (int k = 0; k < length; k++){
 			
 			cout << vertices[i][k].getShape();
-			if (k != size-1 && vertices[i][k].getRight()){
-				cout << "    ";
+			if (k != length-1 && vertices[i][k].getRight()){
+				cout << "  ";
 			}
-			else if (k!= size-1){
-				cout << walls << walls << walls << walls;
+			else if (k!= length-1){
+				cout << walls << walls;
 			}
 
 		}
@@ -288,7 +370,7 @@ void Maze::printMaze(){
 
 	}
 
-	for (int i = 0; i < (size*5 - 2); i++){
+	for (int i = 0; i < (length*3); i++){
 		cout << walls;
 	}
 	cout << endl;
