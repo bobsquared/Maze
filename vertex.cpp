@@ -19,7 +19,7 @@ Vertex::Vertex(){
 }
 
 Vertex::Vertex(int l, int p){
-	shape = "#";
+	shape = " ";
 	length = l;
 	previous = p;
 	up = false;
@@ -131,4 +131,15 @@ void Vertex::setK(int ik){
 bool Vertex::operator<(const Vertex & e){
 
 	return true;
+}
+
+bool Vertex::operator==(const Vertex & e){
+
+	if (e.getI() == i && e.getK() == k){
+		return true;
+	}
+	else{
+		return false;
+	}
+	
 }

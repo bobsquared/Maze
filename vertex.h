@@ -71,5 +71,6 @@ public:
 
 	//Use if weighted graph.
 	bool operator<(const Vertex & e);
+	bool operator==(const Vertex & e);
 
 };

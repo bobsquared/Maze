@@ -11,10 +11,16 @@ private:
 
 	//Initialize private arrays and variables
 	Vertex **vertices;
+	string player;
 	int size;
+	int width;
+	int length;
 
 	string walls;
 	VOList<Vertex>* check;
+
+	int playerI;
+	int playerK;
 
 	void initMaze();
 
@@ -37,14 +43,25 @@ public:
 	//Initialize maze with default walls, and size of x (x*x) vertices
 	Maze(int x);
 
-	//Initialize maze with walls of string w, and size of x
+	//Initialize maze with walls of string w, and size of x*x
 	Maze(int x, string w);
+
+	//Initialize maze with walls and size of x, y
+	Maze(int x, int y);
+
+	//Initialize maze with walls of string w, and size of x,y 
+	Maze(int x, int y, string w);
 
 	//Delete maze
 	~Maze();
 
 	//Print the maze
 	void printMaze();
+
+	bool setPlayerUp();
+	bool setPlayerDown();
+	bool setPlayerRight();
+	bool setPlayerLeft();
 
 
 };//End of maze header

@@ -1,6 +1,7 @@
 #include "maze.h"
 #include "random.h"
 #include <time.h>
+#include "colors.h"
 
 
 using namespace std;
@@ -11,6 +12,7 @@ Maze::Maze(){
 
 	//Change this string to change the walls of the maze.
 	walls = "\u2588";	
+	player = "#";
 
 	//Change the size of the maze.
 	width = 25;
@@ -38,7 +40,8 @@ Maze::Maze(int x){
 
 
 	//Change this string to change the walls of the maze.
-	walls = "\u2588";	
+	walls = "\u2588";
+	player = "#";	
 
 	//size conditions of the maze
 	if (x < 1){
@@ -70,7 +73,8 @@ Maze::Maze(int x){
 
 Maze::Maze(int x, string wa){
 
-	walls = wa;	
+	walls = wa;
+	player = "#";	
 
 	//size conditions of the maze
 	if (x < 1){
@@ -100,7 +104,8 @@ Maze::Maze(int x, string wa){
 
 Maze::Maze(int x, int y){
 
-	walls = "\u2588";	
+	walls = "\u2588";
+	player = "\u2588";	
 
 	//size conditions of the maze
 	if (x < 1){
@@ -139,6 +144,7 @@ Maze::Maze(int x, int y){
 Maze::Maze(int x, int y, string wa){
 
 	walls = wa;	
+	player = "#";
 
 	//size conditions of the maze
 	if (x < 1){
@@ -191,6 +197,8 @@ Maze::~Maze(){
 void Maze::initMaze(){
 
 	//Initialize variables.
+	playerI = 0;
+	playerK = 0;
 	Rand r = Rand();
 	bool up,down,right,left;
 	int i = 0;
@@ -314,6 +322,7 @@ void Maze::initMaze(){
 //Probably did some shit coding here tbh but it works.
 void Maze::printMaze(){
 
+	Color<string> cs = Color<string>();
 	int j = 0;
 	//Print top border
 	for (int i = 0; i < (length*3 - 1); i++){
@@ -357,7 +366,13 @@ void Maze::printMaze(){
 
 		for (int k = 0; k < length; k++){
 			
-			cout << vertices[i][k].getShape();
+			if (playerI == i && playerK == k){
+				cout << cs.Red(player);
+			}
+			else{
+				cout << vertices[i][k].getShape();
+			}
+
 			if (k != length-1 && vertices[i][k].getRight()){
 				cout << "  ";
 			}
@@ -374,5 +389,49 @@ void Maze::printMaze(){
 		cout << walls;
 	}
 	cout << endl;
+
+}
+
+bool Maze::setPlayerUp(){
+	bool ret = false;
+	if (vertices[playerI][playerK].getUp()){
+		playerI--;
+		ret = true;
+	}
+
+	return ret;
+
+}
+
+bool Maze::setPlayerDown(){
+	bool ret = false;
+	if (vertices[playerI][playerK].getDown()){
+		playerI++;
+		ret = true;
+	}
+
+	return ret;
+
+}
+
+bool Maze::setPlayerRight(){
+	bool ret = false;
+	if (vertices[playerI][playerK].getRight()){
+		playerK++;
+		ret = true;
+	}
+
+	return ret;
+
+}
+
+bool Maze::setPlayerLeft(){
+	bool ret = false;
+	if (vertices[playerI][playerK].getLeft()){
+		playerK--;
+		ret = true;
+	}
+
+	return ret;
 
 }

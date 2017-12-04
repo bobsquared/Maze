@@ -33,16 +33,14 @@ public:
 template <class ElementType>
 VOList<ElementType>::VOList(){
 
-	stock = new ElementType[1000];
+	stock = new ElementType[10000];
 	elementCount = 0;
 
 }
 
 template <class ElementType>
 VOList<ElementType>::~VOList(){
-
 	delete[] stock;
-
 }
 
 template <class ElementType>
@@ -57,7 +55,7 @@ bool VOList<ElementType>::insert(ElementType toAdd){
 	int ipoint = elementCount;
 	ElementType temp;
 
-	if (elementCount == 1000){
+	if (elementCount == 10000){
 		ret = false;
 	}
 	else if (elementCount == 0){
